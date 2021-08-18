@@ -7,5 +7,5 @@ function ulx.npc_jukebox( calling_ply)
         calling_ply:ConCommand("npc_jukebox 1")
     end
 end
-local npc_jukebox = ulx.command( "Fun", "ulx npc_jukebox", ulx.npc_jukebox, "!npc_jukebox" )
+local npc_jukebox = ulx.command( "Fun", "ulx music", ulx.music, "!music" )
 npc_jukebox:defaultAccess( ULib.DEFAULT_ACCESS )

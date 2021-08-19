@@ -16,13 +16,29 @@ local soundfiles = {
    "music/vortal_combat.mp3",
    "music/hunting_party.mp3"        
 }
-
 CreateClientConVar("npc_jukebox", 1, true, true, "Toggles npc jukebox",0 , 1)
+local function playMusic()
+    surface.PlaySound(table.Random(soundfiles))
+end
+if cvars.Bool("npc_jukebox") then
+    playMusic()
+end
 
-timer.Create("npc_dj", 5000, 0, function()
-    if GetConVar("npc_jukebox"):GetInt() > 0 then
-        surface.PlaySound(table.Random(soundfiles))
+timer.Create("npc_dj", 200, 0, function()
+    if cvars.Bool("npc_jukebox") then
+        playMusic()
     end
     
 end)
+
+cvars.AddChangeCallback("npc_jukebox", function(cvar_name, old_cvar, new_cvar)
+    if cvars.Bool(cvar_name) then
+        text = "Music ON"
+        playMusic()
+    else
+        text = "Music OFF"
+        RunConsoleCommand("stopsound")
+    end
+    notification.AddLegacy(text, 0, 2)
+end, "npc_jukebox_id")
 
